@@ -32,5 +32,13 @@ pipeline {
                     '''
                 }
         }
+        stage('ReadScanFinding') {
+            steps {
+                    sh '''
+                        sudo chmod +x ./ReadScanFindings.sh
+                        sudo ./ReadScanFindings.sh
+                    '''
+                }
+        }
     }
 }
