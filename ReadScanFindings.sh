@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
-aws ecr wait image-scan-complete --repository-name centos --image-id imageTag=16
+aws ecr wait image-scan-complete --repository-name centos --image-id imageTag=17
 if [ $(echo $?) -eq 0 ]; then
-  SCAN_FINDINGS=$(aws ecr describe-image-scan-findings --repository-name centos --image-id imageTag="${BUILD_NUMBER}" | jq '.imageScanFindings.findingSeverityCounts')
+  SCAN_FINDINGS=$(aws ecr describe-image-scan-findings --repository-name centos --image-id imageTag=17 | jq '.imageScanFindings.findingSeverityCounts')
   CRITICAL=$(echo $SCAN_FINDINGS | jq '.CRITICAL')
   HIGH=$(echo $SCAN_FINDINGS | jq '.HIGH')
   MEDIUM=$(echo $SCAN_FINDINGS | jq '.MEDIUM')
