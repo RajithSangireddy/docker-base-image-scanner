@@ -1,15 +1,37 @@
 pipeline {
     agent any
+    options {
+        skipStagesAfterUnstable()
+    }
     stages {
-         stage('Hello') { 
+         stage('Clone repository') { 
             steps { 
-             // withAWS(roleAccount:'466557447748', role:'arn:aws:iam::466557447748:role/EC2-to-call-ECR') {
-                sh '''
-                    aws ecr list-images --repository-name centos
-                '''
-              //      }
+                script{
+                checkout https://github.com/RajithSangireddy/docker-base-image-scanner.git
                 }
             }
         }
-} 
 
+        stage('Build') { 
+            steps { 
+               sh '''
+                docker build -t centos7:${env.BUILD_NUMBER} .
+               '''
+            }
+        }
+        stage('Test'){
+            steps {
+                 echo 'Empty'
+            }
+        }
+        stage('Deploy') {
+            steps {
+                    sh '''
+                        aws ecr get-login-password --region us-east-2 | sudo docker login --username AWS --password-stdin 466557447748.dkr.ecr.us-east-2.amazonaws.com
+                        sudo docker tag centos7:${env.BUILD_NUMBER} 466557447748.dkr.ecr.us-east-2.amazonaws.com/centos7:${env.BUILD_NUMBER}
+                        sudo docker push 466557447748.dkr.ecr.us-east-2.amazonaws.com/centos7:${env.BUILD_NUMBER}
+                    '''
+                }
+        }
+    }
+}
