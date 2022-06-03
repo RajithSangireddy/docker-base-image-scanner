@@ -1,43 +1,14 @@
 pipeline {
     agent any
-    options {
-        skipStagesAfterUnstable()
-    }
     stages {
-         stage('Clone repository') { 
+         stage('Hello') { 
             steps { 
-                script{
-                checkout scm
+             // withAWS(roleAccount:'466557447748', role:'arn:aws:iam::466557447748:role/EC2-to-call-ECR') {
+                sh '''
+                    aws ecr list-images --repository-name centos
+                '''
+              //      }
                 }
             }
         }
-
-        stage('Build') { 
-            steps { 
-                script{
-                 app = docker.build("underwater")
-                }
-            }
-        }
-        stage('Test'){
-            steps {
-                 echo 'Empty'
-            }
-        }
-        stage('Test'){
-            steps {
-                 echo 'Empty'
-            }
-        }
-        stage('Deploy') {
-            steps {
-                script{
-                        docker.withRegistry('466557447748.dkr.ecr.us-east-2.amazonaws.com'){
-                    app.push("${env.BUILD_NUMBER}")
-                    app.push("latest")
-                    }
-                }
-            }
-        }
-    }
-}
+}        
