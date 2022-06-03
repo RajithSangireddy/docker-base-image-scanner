@@ -29,14 +29,12 @@ pipeline {
                         aws ecr get-login-password --region us-east-2 | sudo docker login --username AWS --password-stdin 466557447748.dkr.ecr.us-east-2.amazonaws.com
                         sudo docker tag "centos7:${BUILD_NUMBER}" "466557447748.dkr.ecr.us-east-2.amazonaws.com/centos:${BUILD_NUMBER}"
                         sudo docker push "466557447748.dkr.ecr.us-east-2.amazonaws.com/centos:${BUILD_NUMBER}"
-                        sudo chmod +x ./ReadScanFindings.sh
-                        sudo ./ReadScanFindings.sh
                     '''
                 }
         }
         stage('Sleep') {
             steps {
-              sleep time: 6000, unit: 'MILLISECONDS'
+              sleep time: 60000, unit: 'MILLISECONDS'
                 }
         }
         stage('ReadScanFindings') {
