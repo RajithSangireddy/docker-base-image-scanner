@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -e
-aws ecr wait image-scan-complete --repository-name centos --image-id imageTag=24
-if [ $(echo $?) -eq 0 ]; then
+#aws ecr wait image-scan-complete --repository-name centos --image-id imageTag=25
+#if [ $(echo $?) -eq 0 ]; then
   SCAN_FINDINGS=$(aws ecr describe-image-scan-findings --repository-name centos --image-id imageTag=24 | jq '.imageScanFindings.findingSeverityCounts')
   CRITICAL=$(echo $SCAN_FINDINGS | jq '.CRITICAL')
   HIGH=$(echo $SCAN_FINDINGS | jq '.HIGH')
@@ -14,4 +14,4 @@ if [ $(echo $?) -eq 0 ]; then
 #    aws ecr batch-delete-image --repository-name my-repo --image-ids imageTag=v0.1  #delete pushed image from container registry
     exit 1  #exit execution due to docker image vulnerabilities
   fi
-fi
+#fi
