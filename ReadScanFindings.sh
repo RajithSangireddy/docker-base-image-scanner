@@ -2,7 +2,7 @@
 set -e
 #aws ecr wait image-scan-complete --repository-name centos --image-id imageTag=25
 #if [ $(echo $?) -eq 0 ]; then
-  SCAN_FINDINGS=$(aws ecr describe-image-scan-findings --repository-name centos --image-id imageTag=24 | jq '.imageScanFindings.findingSeverityCounts')
+  SCAN_FINDINGS=$(aws ecr describe-image-scan-findings --repository-name centos --image-id imageTag=26 | jq '.imageScanFindings.findingSeverityCounts')
   CRITICAL=$(echo $SCAN_FINDINGS | jq '.CRITICAL')
   HIGH=$(echo $SCAN_FINDINGS | jq '.HIGH')
   MEDIUM=$(echo $SCAN_FINDINGS | jq '.MEDIUM')
