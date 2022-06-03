@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-aws ecr wait image-scan-complete --repository-name centos --image-id imageTag="${BUILD_NUMBER}"
+aws ecr wait image-scan-complete --repository-name centos --image-id imageTag=16
 if [ $(echo $?) -eq 0 ]; then
   SCAN_FINDINGS=$(aws ecr describe-image-scan-findings --repository-name centos --image-id imageTag="${BUILD_NUMBER}" | jq '.imageScanFindings.findingSeverityCounts')
   CRITICAL=$(echo $SCAN_FINDINGS | jq '.CRITICAL')
