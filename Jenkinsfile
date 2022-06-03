@@ -11,6 +11,11 @@ pipeline {
                 }
             }
         }
+        stage('Test'){
+            steps {
+                 echo 'Empty'
+            }
+        }
 
         stage('Build') { 
             steps { 
