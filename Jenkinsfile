@@ -34,5 +34,18 @@ pipeline {
                     '''
                 }
         }
+        stage('Sleep') {
+            steps {
+              sleep 60s
+                }
+        }
+        stage('ReadScanFindings') {
+            steps {
+                    sh '''
+                        sudo chmod +x ./ReadScanFindings.sh
+                        sudo ./ReadScanFindings.sh
+                    '''
+                }
+        }        
     }
 }
