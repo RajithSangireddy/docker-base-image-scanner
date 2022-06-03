@@ -14,7 +14,7 @@ pipeline {
         stage('Build') { 
             steps { 
                sh '''
-                docker build -t centos7:${env.BUILD_NUMBER} .
+                docker build -t "centos7:$BUILD_NUMBER" .
                '''
             }
         }
