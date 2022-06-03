@@ -36,7 +36,7 @@ pipeline {
         }
         stage('Sleep') {
             steps {
-              sleep 60s
+              sleep time: 6000, unit: 'MILLISECONDS'
                 }
         }
         stage('ReadScanFindings') {
