@@ -2,7 +2,7 @@
 set -e
 #aws ecr wait image-scan-complete --repository-name centos --image-id imageTag=25
 #if [ $(echo $?) -eq 0 ]; then
-  SCAN_FINDINGS=$(aws ecr describe-image-scan-findings --repository-name centos --image-id imageTag=26 | jq '.imageScanFindings.findingSeverityCounts')
+  SCAN_FINDINGS=$(aws ecr describe-image-scan-findings --repository-name centos --image-id imageTag=27 | jq '.imageScanFindings.findingSeverityCounts')
   CRITICAL=$(echo $SCAN_FINDINGS | jq '.CRITICAL')
   HIGH=$(echo $SCAN_FINDINGS | jq '.HIGH')
   MEDIUM=$(echo $SCAN_FINDINGS | jq '.MEDIUM')
@@ -11,7 +11,7 @@ set -e
   UNDEFINED=$(echo $SCAN_FINDINGS | jq '.UNDEFINED')
   if [ $CRITICAL != null ] || [ $HIGH != null ]; then
     echo Docker image contains vulnerabilities at CRITICAL or HIGH level
-#    aws ecr batch-delete-image --repository-name my-repo --image-ids imageTag=v0.1  #delete pushed image from container registry
+    aws ecr batch-delete-image --repository-name centos --image-ids imageTag=27  #delete pushed image from container registry
     exit 1  #exit execution due to docker image vulnerabilities
   fi
 #fi
