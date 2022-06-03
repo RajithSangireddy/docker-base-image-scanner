@@ -7,7 +7,7 @@ pipeline {
          stage('Clone repository') { 
             steps { 
                 script{
-                checkout https://github.com/RajithSangireddy/docker-base-image-scanner.git
+                git branch: 'main', url: 'https://github.com/RajithSangireddy/docker-base-image-scanner.git'
                 }
             }
         }
