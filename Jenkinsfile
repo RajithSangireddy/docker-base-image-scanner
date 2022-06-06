@@ -14,7 +14,7 @@ pipeline {
         stage('Build') { 
             steps { 
                sh '''
-                sudo docker build -t "centos7:${BUILD_NUMBER}" .
+                for file in `cat centos.txt`; do sudo docker build --target $file -t $file .; done
                '''
             }
         }
