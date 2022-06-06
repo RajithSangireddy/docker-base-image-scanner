@@ -12,6 +12,6 @@
   if [ $CRITICAL != null ] || [ $HIGH != null ]; then
     echo Docker image contains vulnerabilities at CRITICAL or HIGH level
     aws ecr batch-delete-image --repository-name centos --image-ids imageTag=33  #delete pushed image from container registry
-    exit 1  #exit execution due to docker image vulnerabilities
+    exit 0  #exit execution due to docker image vulnerabilities
   fi
 #fi
