@@ -18,6 +18,15 @@ pipeline {
                '''
             }
         }
+        stage ('Artifactory configuration') {
+            steps {
+                rtServer (
+                    id: "ARTIFACTORY_SERVER",
+                    url: 'https://rajith.jfrog.io/artifactory',
+                    credentialsId: '0bde53a0-d8b4-4b40-b51c-b6859aee8123'
+                )
+            }
+        }
         stage('Test'){
             steps {
                  echo 'Empty'
