@@ -35,8 +35,8 @@ pipeline {
         stage ('Push image to Artifactory') {
             steps {
                 sh '''
-                    for file in `cat centos.txt`; do sudo docker tag "$file:$file" "rajith.jfrog.io/artifactory-docker-dev-local/$file:$file"; done
-                    for file in `cat centos.txt`; do sudo docker push "rajith.jfrog.io/artifactory-docker-dev-local/$file:$file"; done
+                    for file in `cat centos.txt`; do sudo docker tag "$file:$file" "rajith.jfrog.io/artifactory-docker-dev-local/$file:${BUILD_NUMBER}"; done
+                    for file in `cat centos.txt`; do sudo docker push "rajith.jfrog.io/artifactory-docker-dev-local/$file:${BUILD_NUMBER}"; done
                 '''
             }
         }
