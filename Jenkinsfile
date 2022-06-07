@@ -32,6 +32,14 @@ pipeline {
                  echo 'Empty'
             }
         }
+        stage ('Push image to Artifactory') {
+            steps {
+                sh '''
+                    for file in `cat centos.txt`; do sudo docker tag "$file:$file" "rajith.jfrog.io/default-docker-virtual/$file:$file"; done
+                    for file in `cat centos.txt`; do sudo docker push "rajith.jfrog.io/default-docker-virtual/$file:$file"; done
+                '''
+            }
+        }
         stage('Deploy') {
             steps {
                     sh '''
