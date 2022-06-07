@@ -40,17 +40,17 @@ pipeline {
                 '''
             }
         }
-        #stage('Deploy') {
-        #    steps {
-        #            sh '''
-        #                aws ecr get-login-password --region us-east-2 | sudo docker login --username AWS --password-stdin 466557447748.dkr.ecr.us-east-2.amazonaws.com
-                        # sudo docker tag "centos7:${BUILD_NUMBER}" "466557447748.dkr.ecr.us-east-2.amazonaws.com/centos:${BUILD_NUMBER}"
-        #               for file in `cat centos.txt`; do sudo docker tag "$file:$file" "466557447748.dkr.ecr.us-east-2.amazonaws.com/centos:$file"; done
-                        #sudo docker push 466557447748.dkr.ecr.us-east-2.amazonaws.com/centos
-        #                for file in `cat centos.txt`; do sudo docker push "466557447748.dkr.ecr.us-east-2.amazonaws.com/centos:$file"; done
-        #            '''
-        #        }
-        #}
+        //stage('Deploy') {
+        //    steps {
+        //            sh '''
+        //               aws ecr get-login-password --region us-east-2 | sudo docker login --username AWS --password-stdin 466557447748.dkr.ecr.us-east-2.amazonaws.com
+        //                # sudo docker tag "centos7:${BUILD_NUMBER}" "466557447748.dkr.ecr.us-east-2.amazonaws.com/centos:${BUILD_NUMBER}"
+        //               for file in `cat centos.txt`; do sudo docker tag "$file:$file" "466557447748.dkr.ecr.us-east-2.amazonaws.com/centos:$file"; done
+        //                #sudo docker push 466557447748.dkr.ecr.us-east-2.amazonaws.com/centos
+        //                for file in `cat centos.txt`; do sudo docker push "466557447748.dkr.ecr.us-east-2.amazonaws.com/centos:$file"; done
+        //            '''
+        //        }
+        //}
         stage('Sleep') {
             steps {
               sleep time: 60000, unit: 'MILLISECONDS'
