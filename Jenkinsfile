@@ -52,11 +52,11 @@ pipeline {
         //            '''
         //        }
         //}
-        stage('Sleep') {
-            steps {
-              sleep time: 60000, unit: 'MILLISECONDS'
-                }
-        }
+        //stage('Sleep') {
+        //    steps {
+        //      sleep time: 60000, unit: 'MILLISECONDS'
+        //        }
+        //}
         //stage('ReadScanFindings') {
         //    steps {
         //            sh '''
