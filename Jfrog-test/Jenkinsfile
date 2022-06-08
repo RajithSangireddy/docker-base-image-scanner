@@ -6,7 +6,7 @@ pipeline {
             steps {
                 //git branch: 'master', url: "https://github.com/jfrog/project-examples.git"
                 script{
-                    git branch: 'main', url: 'https://github.com/RajithSangireddy/docker-base-image-scanner.git'
+                git branch: 'main', url: 'https://github.com/RajithSangireddy/docker-base-image-scanner.git'
                 }
             }
         }
