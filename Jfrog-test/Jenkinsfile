@@ -29,9 +29,9 @@ pipeline {
 
         stage ('Build docker image') {
             steps {
-                script {
-                    sudo docker.build('artifact-docker-dev-local-scanned/hello-world:latest', '-f ./Jfrog-test/ .')
-                }
+                sh '''
+                    for file in `grep -v '#' Dockerfile | awk 'NF>1{print $NF}'`; do sudo docker build --target $file -t $file:$file .; done
+                '''
             }
         }
 
