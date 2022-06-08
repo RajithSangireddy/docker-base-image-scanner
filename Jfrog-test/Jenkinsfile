@@ -20,6 +20,12 @@ pipeline {
                 )
             }
         }
+        
+        stage('Test'){
+            steps {
+                 echo 'Empty'
+            }
+        }
 
         stage ('Build docker image') {
             steps {
