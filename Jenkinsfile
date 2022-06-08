@@ -57,13 +57,13 @@ pipeline {
               sleep time: 60000, unit: 'MILLISECONDS'
                 }
         }
-        stage('ReadScanFindings') {
-            steps {
-                    sh '''
-                        sudo chmod +x ./ReadScanFindings.sh
-                        sudo ./ReadScanFindings.sh
-                    '''
-                }
-        }        
+        //stage('ReadScanFindings') {
+        //    steps {
+        //            sh '''
+        //                sudo chmod +x ./ReadScanFindings.sh
+        //                sudo ./ReadScanFindings.sh
+        //           '''
+        //        }
+        //}        
     }
 }
