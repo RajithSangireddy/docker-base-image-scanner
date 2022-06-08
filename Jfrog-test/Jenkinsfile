@@ -30,7 +30,7 @@ pipeline {
         stage ('Build docker image') {
             steps {
                 sh '''
-                    for file in `grep -v '#' Dockerfile | awk 'NF>1{print $NF}'`; do sudo docker build --target $file -t $file:$file .; done
+                    sudo docker.build(artifact-docker-dev-local-scanned + '/hello-world:latest', './Jfrog-test/ .')
                 '''
             }
         }
