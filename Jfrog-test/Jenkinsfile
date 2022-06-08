@@ -30,7 +30,7 @@ pipeline {
         stage ('Build docker image') {
             steps {
                 script {
-                    docker.build('artifact-docker-dev-local-scanned/hello-world:latest', './Jforg-test/')
+                    docker.build('artifact-docker-dev-local-scanned/hello-world:latest', '-f ./Jforg-test/')
                 }
             }
         }
