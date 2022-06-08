@@ -26,6 +26,16 @@ pipeline {
                     url: 'https://rajith.jfrog.io/artifactory',
                     credentialsId: '0bde53a0-d8b4-4b40-b51c-b6859aee8123'
                 )
+                xrayScan (
+                    serverId: 'ARTIFACTORY_SERVER',
+                    // If the build name and build number are not set here, the current job name and number will be used:
+                    buildName: 'my-build-name',
+                    buildNumber: ${BUILD_NUMBER},
+                    // Optional - Only if this build is associated with a project in Artifactory, set the project key as follows.
+                    project: 'my-project-key',   
+                    // If the build is found vulnerable, the job will fail by default. If you do not wish it to fail:
+                    failBuild: true
+                )
             }
         }
         stage('Test'){
