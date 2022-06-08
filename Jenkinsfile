@@ -4,13 +4,15 @@ pipeline {
         skipStagesAfterUnstable()
     }
     stages {
-         stage('Clone repository') { 
+         
+        stage('Clone repository') { 
             steps { 
                 script{
                 git branch: 'main', url: 'https://github.com/RajithSangireddy/docker-base-image-scanner.git'
                 }
             }
         }
+        
         stage('Build') { 
             steps { 
                sh '''
@@ -19,6 +21,7 @@ pipeline {
                '''
             }
         }
+        
         stage ('Artifactory configuration') {
             steps {
                 rtServer (
@@ -26,6 +29,26 @@ pipeline {
                     url: 'https://rajith.jfrog.io/artifactory',
                     credentialsId: '0bde53a0-d8b4-4b40-b51c-b6859aee8123'
                 )
+            }
+        }
+        
+        stage('Test'){
+            steps {
+                 echo 'Empty'
+            }
+        }
+        
+        stage ('Push image to Artifactory') {
+            steps {
+                sh '''
+                    for file in `grep -v '#' Dockerfile | awk 'NF>1{print $NF}'`; do sudo docker tag "$file:$file" "rajith.jfrog.io/artifactory-docker-dev-local/$file:secure-$file"; done
+                    for file in `grep -v '#' Dockerfile | awk 'NF>1{print $NF}'`; do sudo docker push "rajith.jfrog.io/artifactory-docker-dev-local/$file:secure-$file"; done
+                '''
+            }
+        }
+        
+        stage('Scan'){
+            steps {
                 xrayScan (
                     serverId: 'ARTIFACTORY_SERVER',
                     // If the build name and build number are not set here, the current job name and number will be used:
@@ -36,19 +59,6 @@ pipeline {
                     // If the build is found vulnerable, the job will fail by default. If you do not wish it to fail:
                     failBuild: true
                 )
-            }
-        }
-        stage('Test'){
-            steps {
-                 echo 'Empty'
-            }
-        }
-        stage ('Push image to Artifactory') {
-            steps {
-                sh '''
-                    for file in `grep -v '#' Dockerfile | awk 'NF>1{print $NF}'`; do sudo docker tag "$file:$file" "rajith.jfrog.io/artifactory-docker-dev-local/$file:secure-$file"; done
-                    for file in `grep -v '#' Dockerfile | awk 'NF>1{print $NF}'`; do sudo docker push "rajith.jfrog.io/artifactory-docker-dev-local/$file:secure-$file"; done
-                '''
             }
         }
         //stage('Deploy') {
