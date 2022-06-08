@@ -1,0 +1,54 @@
+pipeline {
+    agent any
+
+    stages {
+        stage ('Clone') {
+            steps {
+                //git branch: 'master', url: "https://github.com/jfrog/project-examples.git"
+                git branch: 'main', url: 'https://github.com/RajithSangireddy/docker-base-image-scanner.git'
+            }
+        }
+
+        stage ('Artifactory configuration') {
+            steps {
+                rtServer (
+                    id: "ARTIFACTORY_SERVER",
+                    url: 'https://rajith.jfrog.io/artifactory',
+                    credentialsId: 0bde53a0-d8b4-4b40-b51c-b6859aee8123'
+                )
+            }
+        }
+
+        stage ('Build docker image') {
+            steps {
+                script {
+                    docker.build(ARTIFACTORY_DOCKER_REGISTRY + '/hello-world:latest', './Jforg-test/')
+                }
+            }
+        }
+
+        stage ('Push image to Artifactory') {
+            steps {
+                rtDockerPush(
+                    serverId: "ARTIFACTORY_SERVER",
+                    image: ARTIFACTORY_DOCKER_REGISTRY + '/hello-world:latest',
+                    // Host:
+                    // On OSX: "tcp://127.0.0.1:1234"
+                    // On Linux can be omitted or null
+                    host: HOST_NAME,
+                    targetRepo: 'artifact-docker-dev-local-scanned',
+                    // Attach custom properties to the published artifacts:
+                    properties: 'project-name=docker1;status=stable'
+                )
+            }
+        }
+
+        stage ('Publish build info') {
+            steps {
+                rtPublishBuildInfo (
+                    serverId: "ARTIFACTORY_SERVER"
+                )
+            }
+        }
+    }
+}
