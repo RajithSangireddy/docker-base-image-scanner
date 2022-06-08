@@ -30,7 +30,7 @@ pipeline {
         stage ('Build docker image') {
             steps {
                 sh '''
-                    sudo docker.build('artifact-docker-dev-local-scanned' + '/hello-world:latest', './Jfrog-test/ .')
+                    sudo docker build -t hello-world:latest -f ./Jfrog-test/ .
                 '''
             }
         }
