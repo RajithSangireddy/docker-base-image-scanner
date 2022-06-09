@@ -58,7 +58,7 @@ pipeline {
         stage('Scan'){
             steps {
                 xrayScan (
-                    serverId: 'ARTIFACTORY_SERVER',
+                    serverId: "ARTIFACTORY_SERVER",
                     // If the build name and build number are not set here, the current job name and number will be used:
                     buildName: 'my-build-name',
                     buildNumber: "${BUILD_NUMBER}",
