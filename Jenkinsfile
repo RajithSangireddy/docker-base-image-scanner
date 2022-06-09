@@ -16,7 +16,7 @@ pipeline {
         stage('Parameter ') { 
             steps { 
                 script{
-                    println ${params.Distribution}
+                    println params.Distribution
                 }
             }
         }
