@@ -25,7 +25,7 @@ pipeline {
         stage ('Artifactory configuration') {
             steps {
                 rtServer (
-                    //id: "ARTIFACTORY_SERVER",
+                    id: "ARTIFACTORY_SERVER",
                     url: 'https://rajith.jfrog.io/artifactory',
                     credentialsId: 'b4c95b75-b713-4180-bb52-e8f3a1d31ed0'
                 )
@@ -58,7 +58,7 @@ pipeline {
         stage('Scan'){
             steps {
                 xrayScan (
-                    //serverId: "ARTIFACTORY_SERVER",
+                    serverId: "ARTIFACTORY_SERVER",
                     // If the build name and build number are not set here, the current job name and number will be used:
                     buildName: 'my-build-name',
                     buildNumber: "${BUILD_NUMBER}",
