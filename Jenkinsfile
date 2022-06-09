@@ -27,7 +27,7 @@ pipeline {
                 rtServer (
                     id: "ARTIFACTORY_SERVER",
                     url: 'https://rajith.jfrog.io/artifactory',
-                    credentialsId: '32676224-5a84-4830-8981-e8467722e8bc'
+                    credentialsId: 'b4c95b75-b713-4180-bb52-e8f3a1d31ed0'
                 )
             }
         }
