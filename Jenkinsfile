@@ -18,6 +18,7 @@ pipeline {
         //        script{
         //            println params.Distribution
         //       }
+        //   echo "Just testing"
         //    }
         //}
         
