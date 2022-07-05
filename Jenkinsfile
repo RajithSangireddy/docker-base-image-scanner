@@ -13,13 +13,13 @@ pipeline {
             }
         }
         
-        stage('Parameter ') { 
-            steps { 
-                script{
-                    println params.Distribution
-                }
-            }
-        }
+        //stage('Parameter ') { 
+        //    steps { 
+        //        script{
+        //            println params.Distribution
+        //       }
+        //    }
+        //}
         
         stage('Build') { 
             steps { 
