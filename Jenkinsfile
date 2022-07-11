@@ -38,6 +38,16 @@ pipeline {
                     url: 'https://rajith.jfrog.io/artifactory',
                     credentialsId: 'b4c95b75-b713-4180-bb52-e8f3a1d31ed0'
                 )
+                xrayScan (
+                    serverId: 'ARTIFACTORY_SERVER',
+                    // If the build name and build number are not set here, the current job name and number will be used:
+                    //buildName: 'my-build-name',
+                    //buildNumber: '17',
+                    // Optional - Only if this build is associated with a project in Artifactory, set the project key as follows.
+                    //project: 'my-project-key',   
+                    // If the build is found vulnerable, the job will fail by default. If you do not wish it to fail:
+                    failBuild: true
+                )
             }
         }
         
@@ -64,20 +74,20 @@ pipeline {
             }
         }
         
-        stage('Scan'){
-            steps {
-                xrayScan (
-                    serverId: "ARTIFACTORY_SERVER",
+        //stage('Scan'){
+        //    steps {
+        //        xrayScan (
+        //            serverId: "ARTIFACTORY_SERVER",
                     // If the build name and build number are not set here, the current job name and number will be used:
-                    buildName: 'my-build-name',
-                    buildNumber: "${BUILD_NUMBER}",
+        //            buildName: 'my-build-name',
+        //            buildNumber: "${BUILD_NUMBER}",
                     // Optional - Only if this build is associated with a project in Artifactory, set the project key as follows.
                     //project: 'my-project-key',   
                     // If the build is found vulnerable, the job will fail by default. If you do not wish it to fail:
-                    failBuild: true
-                )
-            }
-        }
+        //            failBuild: true
+        //        )
+        //    }
+        //}
         //stage('Deploy') {
         //    steps {
         //            sh '''
