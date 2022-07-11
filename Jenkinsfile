@@ -36,7 +36,7 @@ pipeline {
                 rtServer (
                     id: "ARTIFACTORY_SERVER",
                     url: 'https://rajith.jfrog.io/artifactory',
-                    credentialsId: 'b4c95b75-b713-4180-bb52-e8f3a1d31ed0'
+                    credentialsId: 'eeb7c080-d052-4914-a6e8-2218ab3f2956'
                 )
                 xrayScan (
                     serverId: 'ARTIFACTORY_SERVER',
