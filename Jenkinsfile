@@ -63,6 +63,16 @@ pipeline {
                 rtPublishBuildInfo (
                     serverId: "ARTIFACTORY_SERVER"
                 )
+                xrayScan (
+                    serverId: 'ARTIFACTORY_SERVER',
+                    // If the build name and build number are not set here, the current job name and number will be used:
+                    buildName: 'scan-docker-image-pipeline',
+                    buildNumber: "${BUILD_NUMBER}",
+                    // Optional - Only if this build is associated with a project in Artifactory, set the project key as follows.
+                    //project: 'my-project-key',   
+                    // If the build is found vulnerable, the job will fail by default. If you do not wish it to fail:
+                    failBuild: true
+                )                
             }
         }
         
