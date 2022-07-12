@@ -26,7 +26,7 @@ pipeline {
             steps { 
                sh '''
                 #for file in `cat centos.txt`; do sudo docker build --target $file -t $file:$file .; done
-                who am i
+                whoami
                 for file in `grep -v '#' Dockerfile | awk 'NF>1{print $NF}'`; do sudo docker build --target $file -t $file:$file .; done
                 for file in `grep -v '#' Dockerfile | awk 'NF>1{print $NF}'`; do sudo docker tag "$file:$file" "rajith.jfrog.io/artifactory-docker-dev-local/$file:secure-$file"; done
                '''
