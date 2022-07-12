@@ -64,7 +64,7 @@ pipeline {
             steps {
                 rtDockerPush(
                     serverId: 'ARTIFACTORY_SERVER',
-                    image: 'rajith.jfrog.io/artifactory-docker-dev-local/centos-*',
+                    image: 'rajith.jfrog.io/artifactory-docker-dev-local/*',
                     // Host:
                     // On OSX: 'tcp://127.0.0.1:1234'
                     // On Linux can be omitted or null
