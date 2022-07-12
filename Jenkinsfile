@@ -28,7 +28,7 @@ pipeline {
                 #for file in `cat centos.txt`; do sudo docker build --target $file -t $file:$file .; done
                 whoami
                 for file in `grep -v '#' Dockerfile | awk 'NF>1{print $NF}'`; do sudo docker build --target $file -t $file:$file .; done
-                for file in `grep -v '#' Dockerfile | awk 'NF>1{print $NF}'`; do sudo docker tag "$file:$file"; done
+                for file in `grep -v '#' Dockerfile | awk 'NF>1{print $NF}'`; do sudo docker tag "$file:$file" "$file:$file"; done
                '''
             }
         }
