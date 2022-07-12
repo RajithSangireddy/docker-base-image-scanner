@@ -28,7 +28,7 @@ pipeline {
                 #for file in `cat centos.txt`; do sudo docker build --target $file -t $file:$file .; done
                 whoami
                 for file in `grep -v '#' Dockerfile | awk 'NF>1{print $NF}'`; do sudo docker build --target $file -t $file:$file .; done
-                for file in `grep -v '#' Dockerfile | awk 'NF>1{print $NF}'`; do sudo docker tag "$file:$file" "rajith.jfrog.io/artifactory-docker-dev-local/$file:secure-$file"; done
+                for file in `grep -v '#' Dockerfile | awk 'NF>1{print $NF}'`; do sudo docker tag "$file:$file"; done
                '''
             }
         }
@@ -64,7 +64,7 @@ pipeline {
             steps {
                 rtDockerPush(
                     serverId: 'ARTIFACTORY_SERVER',
-                    image: 'rajith.jfrog.io/artifactory-docker-dev-local/*:secure-*',
+                    image: 'centos-*',
                     // Host:
                     // On OSX: 'tcp://127.0.0.1:1234'
                     // On Linux can be omitted or null
