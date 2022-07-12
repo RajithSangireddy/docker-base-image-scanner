@@ -27,6 +27,7 @@ pipeline {
                sh '''
                 #for file in `cat centos.txt`; do sudo docker build --target $file -t $file:$file .; done
                 for file in `grep -v '#' Dockerfile | awk 'NF>1{print $NF}'`; do sudo docker build --target $file -t $file:$file .; done
+                for file in `grep -v '#' Dockerfile | awk 'NF>1{print $NF}'`; do sudo docker tag "$file:$file" "rajith.jfrog.io/artifactory-docker-dev-local/$file:secure-$file"; done
                '''
             }
         }
@@ -49,17 +50,36 @@ pipeline {
             }
         }
         
-        stage ('Push image to Artifactory') {
-            steps {
-                sh '''
-                    for file in `grep -v '#' Dockerfile | awk 'NF>1{print $NF}'`; do sudo docker tag "$file:$file" "rajith.jfrog.io/artifactory-docker-dev-local/$file:secure-$file"; done
-                    for file in `grep -v '#' Dockerfile | awk 'NF>1{print $NF}'`; do sudo docker push "rajith.jfrog.io/artifactory-docker-dev-local/$file:secure-$file"; done
-                '''
-            }
-        }
+        //stage ('Push image to Artifactory') {
+        //    steps {
+        //        sh '''
+        //            for file in `grep -v '#' Dockerfile | awk 'NF>1{print $NF}'`; do sudo docker tag "$file:$file" "rajith.jfrog.io/artifactory-docker-dev-local/$file:secure-$file"; done
+        //            for file in `grep -v '#' Dockerfile | awk 'NF>1{print $NF}'`; do sudo docker push "rajith.jfrog.io/artifactory-docker-dev-local/$file:secure-$file"; done
+        //        '''
+        //    }
+        //}
         
         stage ('Publish build info') {
             steps {
+                rtDockerPush(
+                    serverId: 'ARTIFACTORY_SERVER',
+                    image: 'rajith.jfrog.io/artifactory-docker-dev-local' + '/secure-*',
+                    // Host:
+                    // On OSX: 'tcp://127.0.0.1:1234'
+                    // On Linux can be omitted or null
+                    host: HOST_NAME,
+                    targetRepo: 'artifactory-docker-dev-local',
+                    // Attach custom properties to the published artifacts:
+                    //properties: 'project-name=docker1;status=stable',
+                    // If the build name and build number are not set here, the current job name and number will be used:
+                    buildName: 'scan-docker-image-pipeline',
+                    buildNumber: "${BUILD_NUMBER}",
+                    // Optional - Only if this build is associated with a project in Artifactory, set the project key as follows.
+                    //project: 'my-project-key',
+                    // Jenkins spawns a new java process during this step's execution.
+                    // You have the option of passing any java args to this new process.
+                    javaArgs: '-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005'
+                )
                 rtPublishBuildInfo (
                     serverId: "ARTIFACTORY_SERVER"
                 )
