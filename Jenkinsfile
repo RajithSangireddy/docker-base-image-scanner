@@ -68,7 +68,7 @@ pipeline {
                     // Host:
                     // On OSX: 'tcp://127.0.0.1:1234'
                     // On Linux can be omitted or null
-                    //host: HOST_NAME,
+                    host: 'rajith.jfrog.io:2375',
                     targetRepo: 'artifactory-docker-dev-local',
                     // Attach custom properties to the published artifacts:
                     //properties: 'project-name=docker1;status=stable',
@@ -79,7 +79,7 @@ pipeline {
                     //project: 'my-project-key',
                     // Jenkins spawns a new java process during this step's execution.
                     // You have the option of passing any java args to this new process.
-                    javaArgs: '-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005'
+                    //javaArgs: '-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005'
                 )
                 rtPublishBuildInfo (
                     serverId: "ARTIFACTORY_SERVER"
